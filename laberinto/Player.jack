@@ -1,0 +1,40 @@
+class Player{
+	field int x;
+	field int y;
+
+	// Este es el constructor de la clase Player
+	constructor Player new(int xVal, int yVal){
+		let x = xVal;
+		let y = yVal;
+		return this;
+	}
+
+	// obtiene la posición actual del jugador
+	method int getX(){
+		return x;
+	}
+
+	// obtiene la posición del jugador en y
+	method int getY(){
+		return y;
+	}
+
+	// Dependiendo de la tecla presionada se mueve arriba, abajo, derecha o izquierda
+	method void go(int direction){
+
+		if(direction = 8){
+			let x = x - 1;
+		}
+		if(direction = 1){
+			let y =  y - 1;
+		}
+		if(direction = 4){
+			let x = x + 1;
+		}
+		if(direction = 2){
+			let y = y + 1;
+		}
+		return;
+	}
+
+}

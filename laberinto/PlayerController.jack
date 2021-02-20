@@ -1,0 +1,116 @@
+class PlayerController {
+	// Este es el controlador del jugador
+	field Player player;
+	field Array maze;
+	field int blockWidth, blockHeight, xCount, yCount, drawPadding, baseX, baseY;
+
+	// Constructor
+	constructor PlayerController new(Player newPlayer, Array newMaze, int xOrigin, int yOrigin,
+		int bw, int bh, int xc, int yc, int pad){
+		var int x, y;
+		let player = newPlayer;
+		let maze = newMaze;
+		let blockWidth = bw;
+		let blockHeight = bh;
+		let xCount = xc;
+		let yCount = yc;
+		let drawPadding = pad;
+		let baseX = xOrigin;
+		let baseY = yOrigin;
+
+		let x = player.getX();
+		let y = player.getY();	
+
+
+
+		do Screen.setColor(true);
+		do Screen.drawRectangle(baseX + (x * blockWidth) + drawPadding, 
+			baseY + (y * blockHeight) + drawPadding,
+			baseX + ((x+1) * blockWidth) - drawPadding,
+			baseY + ((y+1) * blockHeight) - drawPadding );
+
+		return this;
+	}
+
+	method void loop(){
+		var int direction, x, y;
+		var char key;
+		let key = 0;
+		let x = player.getX();
+		let y = player.getY();
+
+		while( ( (~(x = (xCount - 1) )) | (~(y = 0)) ) = true){
+			while((key < 130) | (key > 133)){
+				// Devuelve el valor de la tecla presionada
+				let key = Keyboard.keyPressed();
+			}
+
+			if(key = 130){
+				let direction = 8;
+				//izquierda
+			}
+			if(key = 131){
+				let direction = 1;
+				//arriba
+			}
+			if(key = 132){
+				let direction = 4;
+				//derecha
+			}
+			if(key = 133){
+				let direction = 2;
+				//abajo
+			}
+
+			if(canPlayerGo(direction)){
+				let x = player.getX();
+				let y = player.getY();				
+				// Primero eliminamos el jugador de la posición actual
+				do Screen.setColor(false);
+				do Screen.drawRectangle(baseX + (x * blockWidth) + drawPadding, 
+					baseY + (y * blockHeight) + drawPadding,
+				 baseX + ((x+1) * blockWidth) - drawPadding,
+				  baseY + ((y+1) * blockHeight) - drawPadding );
+
+				do player.go(direction);
+
+				let x = player.getX();
+				let y = player.getY();	
+				do Screen.setColor(true);
+				do Screen.drawRectangle(baseX + (x * blockWidth) + drawPadding, 
+					baseY + (y * blockHeight) + drawPadding,
+				 baseX + ((x+1) * blockWidth) - drawPadding,
+				  baseY + ((y+1) * blockHeight) - drawPadding );
+
+				}
+
+				let key = 0;
+				do Sys.wait(200);
+		}
+
+		
+
+		return;
+	}
+
+	// Para ver si el jugador se puede desplazar a la posición indicada
+	method boolean canPlayerGo(int direction){
+		var int x, y, val;
+
+		var Array tempArr;
+		let x = player.getX();
+		let y = player.getY();
+		let tempArr = maze[y];
+		let val = tempArr[x];
+		if((val & direction) = direction){
+			return true;
+		}
+
+		return false;
+	}
+
+
+
+
+
+}
